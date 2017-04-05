@@ -31,7 +31,6 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -45,12 +44,15 @@ values."
      helm
      auto-completion
      better-defaults
+
 	 ;; code language
      emacs-lisp
      markdown
      latex
-     python
-	 c-c++
+     (python :variables 
+			python-enable-yapf-format-on-save t)
+     imenu-list
+     c-c++
      ;;git
      org
      ;;version-control
@@ -62,7 +64,6 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-	py-autopep8  
    )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -103,7 +104,7 @@ values."
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
-   dotspacemacs-check-for-update nil
+   dotspacemacs-check-for-update t
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
@@ -307,13 +308,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
- ;;(add-to-list 'load-path "/home/.spacemacs.d/code")
- ;;(require 'init-python)
 
- ;;(spell-checking :variables
- ;;                ispell-program-name "aspell"
- ;;                ispell-dictionary "american"
- ;;                spell-checking-enable-by-default nil)
+
 )
 
 (defun dotspacemacs/user-config ()
@@ -323,14 +319,8 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  ;; personal edit
-  ;;(push "/home/iromise/.spacemacs.d/edit" load-path)
-  ;;(require 'init-edit-util)
-
-  ;; personal code language
-  (push "/home/iromise/.spacemacs.d/lang/" load-path)
-  (require 'init-python)
-
+   
+  ;;(add-hook 'python-mode-hook 'yapf-mode)
   (setq large-file-warning-threshold 100000000)
   (global-unset-key (kbd "C-@"))
   (global-set-key (kbd "M-SPC") 'set-mark-command)
