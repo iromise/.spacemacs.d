@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: pwn
+# key: pwn
+# --
+from pwn import *
+$1 = ELF(${2:filename})
+if args['REMOTE']:
+   sh = remote(${3:ip}, ${4:port})
+else:
+   sh = process($2)
+$0

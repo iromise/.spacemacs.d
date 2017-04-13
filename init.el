@@ -36,21 +36,40 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+	 ;;tools
      (shell :variables
              shell-default-height 30
-             shell-default-position 'bottom)
+             shell-default-position 'bottom
+			 shell-default-shell 'term
+             shell-default-term-shell "/bin/zsh")
+	 tmux
      spell-checking
      syntax-checking
      helm
-     auto-completion
+     (auto-completion :variables
+                   auto-completion-return-key-behavior 'complete
+                   auto-completion-tab-key-behavior 'cycle
+                   auto-completion-complete-with-key-sequence nil
+                   auto-completion-complete-with-key-sequence-delay 0.1
+				   ;; show snippets in the auto-completion popup
+				   auto-completion-enable-snippets-in-popup t
+                   ;; Sort results by usage
+				   auto-completion-enable-sort-by-usage t
+                   auto-completion-private-snippets-directory "~/.spacemacs.d/snippets")
      better-defaults
 
 	 ;; code language
      emacs-lisp
-     markdown
+     (markdown :variables
+            ;;use vmd(Github-flavored live preview) live preview a markdown
+            markdown-live-preview-engine 'vmd)
      latex
-     (python :variables 
-			python-enable-yapf-format-on-save t)
+     restructuredtext
+	 (python :variables
+			;; format the code when saving file
+			python-enable-yapf-format-on-save t
+			;; sort the imports when saving file
+			python-sort-imports-on-save t)
      imenu-list
      c-c++
      ;;git
@@ -319,8 +338,12 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-   
-  ;;(add-hook 'python-mode-hook 'yapf-mode)
+  (add-to-list 'load-path "/home/iromise/.spacemacs.d/file")
+  (require 'init-neotree)
+
+  (add-to-list 'load-path "/home/iromise/.spacemacs.d/ui")
+  ;; enable switch two window
+  (require 'buffer-move)
   (setq large-file-warning-threshold 100000000)
   (global-unset-key (kbd "C-@"))
   (global-set-key (kbd "M-SPC") 'set-mark-command)
