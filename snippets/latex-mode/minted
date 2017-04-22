@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: minted
+# key: minted
+# --
+\begin{minted}[framesep=2mm,frame=lines]{${1:language}}
+$0
+\end{minted}

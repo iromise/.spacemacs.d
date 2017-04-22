@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: threelinetable
+# key: threelinetable
+# --
+\begin{table}[htbp]
+ \centering
+ \caption{$1}
+ \begin{tabular}{lcl}
+  \toprule
+  $2 \\\\
+  \midrule
+  $3 \\\\
+  $4 \\\\
+  \bottomrule
+ \end{tabular}
+ \label{tab:$0}
+\end{table}

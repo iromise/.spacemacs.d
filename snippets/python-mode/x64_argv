@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: x64argv
+# key: x64argv
+# --
+# RDI, RSI, RDX, RCX, R8, R9, more on the stack

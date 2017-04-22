@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: spacing
+# key: spacing
+# --
+\begin{spacing}{1.7}
+\noindent\textbf{$1}
+\end{spacing}
+$0

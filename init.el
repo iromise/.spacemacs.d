@@ -63,18 +63,27 @@ values."
      (markdown :variables
             ;;use vmd(Github-flavored live preview) live preview a markdown
             markdown-live-preview-engine 'vmd)
-     latex
+     (latex :variables
+            latex-enable-folding t)
      restructuredtext
-	 (python :variables
+     (python :variables
 			;; format the code when saving file
 			python-enable-yapf-format-on-save t
 			;; sort the imports when saving file
 			python-sort-imports-on-save t)
      imenu-list
-     c-c++
-     ;;git
-     org
+     (c-c++ :variables
+            ;; open file in c++-mode
+            c-c++-default-mode-for-headers 'c++-mode
+            ;; enable clang support
+            c-c++-enable-clang-support t
+            ;; enable format when saving file
+            c-c++-enable-clang-format-on-save t
+            )
      ;;version-control
+     git
+     org
+
 	 ;; CTRL-s to search
 	 ;;ivy
      )
@@ -344,6 +353,8 @@ you should place your code here."
   (add-to-list 'load-path "/home/iromise/.spacemacs.d/ui")
   ;; enable switch two window
   (require 'buffer-move)
+  (custom-set-faces '(hl-line 
+						((t (:foreground nil :underline nil)))))
   (setq large-file-warning-threshold 100000000)
   (global-unset-key (kbd "C-@"))
   (global-set-key (kbd "M-SPC") 'set-mark-command)
