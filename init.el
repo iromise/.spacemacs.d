@@ -59,9 +59,10 @@ values."
      better-defaults
 
 	 ;; code language
+     shell-scripts
      emacs-lisp
      (markdown :variables
-            ;;use vmd(Github-flavored live preview) live preview a markdown
+            ;;use vmd(Github-flavored live preview) live preview a markdown buffer
             markdown-live-preview-engine 'vmd)
      (latex :variables
             latex-enable-folding t)
@@ -347,12 +348,19 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (add-to-list 'load-path "/home/iromise/.spacemacs.d/tools")
+  (require 'init-shell)
+
   (add-to-list 'load-path "/home/iromise/.spacemacs.d/file")
   (require 'init-neotree)
 
   (add-to-list 'load-path "/home/iromise/.spacemacs.d/ui")
   ;; enable switch two window
   (require 'buffer-move)
+  ;; language config
+  (add-to-list 'load-path "/home/iromise/.spacemacs.d/lang")
+  (require 'init-latex)
   (custom-set-faces '(hl-line 
 						((t (:foreground nil :underline nil)))))
   (setq large-file-warning-threshold 100000000)
