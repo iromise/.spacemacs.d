@@ -3,6 +3,7 @@
 # key: pwn
 # --
 from pwn import *
+from LibcSearcher import *
 $1 = ELF(${2:filename})
 if args['REMOTE']:
    sh = remote(${3:ip}, ${4:port})

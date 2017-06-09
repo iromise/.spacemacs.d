@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -47,6 +48,7 @@ values."
      syntax-checking
      helm
      (auto-completion :variables
+                   ;; when press ret completes with the current selection
                    auto-completion-return-key-behavior 'complete
                    auto-completion-tab-key-behavior 'cycle
                    auto-completion-complete-with-key-sequence nil
@@ -84,7 +86,8 @@ values."
      ;;version-control
      git
      org
-
+     ;; tags
+     gtags
 	 ;; CTRL-s to search
 	 ;;ivy
      )
@@ -93,6 +96,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+    iimage
    )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -144,7 +148,7 @@ values."
    ;; with `:variables' keyword (similar to layers). Check the editing styles
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
-   dotspacemacs-editing-style 'emacs
+   dotspacemacs-editing-style 'hybrid
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -187,7 +191,7 @@ values."
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
-   ;; (default "SPC")
+   ;;(default "SPC")
    dotspacemacs-emacs-command-key "SPC"
    ;; The key used for Vim Ex commands (default ":")
    dotspacemacs-ex-command-key ":"
@@ -348,6 +352,12 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  ;;set the default encoding of the file to be read
+  (prefer-coding-system 'utf-8)
+
+  ;;set the default encoding of the file to be write
+
+  (setq default-buffer-file-coding-system 'utf-8)
 
   (add-to-list 'load-path "/home/iromise/.spacemacs.d/tools")
   (require 'init-shell)
@@ -361,6 +371,7 @@ you should place your code here."
   ;; language config
   (add-to-list 'load-path "/home/iromise/.spacemacs.d/lang")
   (require 'init-latex)
+  (require 'init-markdown)
   (custom-set-faces '(hl-line 
 						((t (:foreground nil :underline nil)))))
   (setq large-file-warning-threshold 100000000)
