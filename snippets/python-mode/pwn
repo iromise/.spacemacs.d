@@ -3,10 +3,14 @@
 # key: pwn
 # --
 from pwn import *
-from LibcSearcher import *
-$1 = ELF(${2:filename})
+context.terminal = ['gnome-terminal', '-x', 'sh', '-c']
+if args['DEBUG']:
+    context.log_level = 'debug'
+context.binary = "$1"
+$1 = ELF(context.binary)
 if args['REMOTE']:
-   sh = remote(${3:ip}, ${4:port})
+    p = remote(${2:ip}, ${3:port})
 else:
-   sh = process($2)
+    p = process("$1")
+log.info('PID: '+proc.pidof(p))
 $0
