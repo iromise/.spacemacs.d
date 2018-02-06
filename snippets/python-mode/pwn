@@ -6,11 +6,26 @@ from pwn import *
 context.terminal = ['gnome-terminal', '-x', 'sh', '-c']
 if args['DEBUG']:
     context.log_level = 'debug'
-context.binary = "$1"
-$1 = ELF(context.binary)
 if args['REMOTE']:
-    p = remote(${2:ip}, ${3:port})
+    p = remote(${1:ip}, ${2:port})
 else:
-    p = process("$1")
-log.info('PID: '+proc.pidof(p))
+    p = process("$3")
+context.binary = "$3"
+$4 = ELF("$3")
+log.info('PID: '+str(proc.pidof(p)[0]))
 $0
+
+def offset_bin_main_arena(idx):
+    word_bytes = context.word_size / 8
+    offset = 4  # lock
+    offset += 4  # flags
+    offset += word_bytes * 10  # offset fastbin
+    offset += word_bytes * 2  # top,last_remainder
+    offset += idx * 2 * word_bytes  # idx
+    offset -= word_bytes * 2  # bin overlap
+    return offset
+
+def exp():
+    pass
+if __name__=="__main__":
+    exp()

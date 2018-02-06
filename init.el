@@ -92,7 +92,7 @@ values."
      git
      org
      ;; tags
-     gtags
+     ;; gtags ;; make too slow
      ;; file tree
 	 treemacs
      )
@@ -306,7 +306,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -365,19 +365,17 @@ you should place your code here."
 
   (setq default-buffer-file-coding-system 'utf-8)
 
-  (add-to-list 'load-path "/home/iromise/.spacemacs.d/tools")
-  (require 'init-shell)
+  ;;(add-to-list 'load-path "/home/iromise/.spacemacs.d/tools")
+  ;;(require 'init-shell)
 
-  (add-to-list 'load-path "/home/iromise/.spacemacs.d/file")
+  ;;(add-to-list 'load-path "/home/iromise/.spacemacs.d/file")
 
 
-  (add-to-list 'load-path "/home/iromise/.spacemacs.d/ui")
-  ;; enable switch two window
-  (require 'buffer-move)
+  ;;(add-to-list 'load-path "/home/iromise/.spacemacs.d/ui")
   ;; language config
-  (add-to-list 'load-path "/home/iromise/.spacemacs.d/lang")
-  (require 'init-latex)
-  (require 'init-markdown)
+  ;;(add-to-list 'load-path "/home/iromise/.spacemacs.d/lang")
+  ;;(require 'init-latex)
+  ;;(require 'init-markdown)
   (custom-set-faces '(hl-line 
 						((t (:foreground nil :underline nil)))))
   (setq large-file-warning-threshold 100000000)
@@ -404,7 +402,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil treemacs pfuture toc-org symon string-inflection stickyfunc-enhance srefactor spaceline powerline smeargle shell-pop restart-emacs realgud test-simple loc-changes load-relative rainbow-delimiters pyvenv pytest pyenv-mode py-isort powershell popwin pip-requirements persp-mode pcre2el password-generator paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download org-bullets org-brain org-plus-contrib open-junk-file mwim multi-term move-text monokai-theme mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc insert-shebang info+ indent-guide hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make projectile helm-gtags helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip flycheck-bashate flycheck pkg-info epl flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-lion evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish define-word cython-mode company-tern dash-functional tern company-statistics company-shell company-quickhelp pos-tip company-c-headers company-auctex company-anaconda company column-enforce-mode coffee-mode cmake-mode cmake-ide levenshtein clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile packed auctex-latexmk auctex anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup))))
+    (centered-cursor-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort powershell popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish define-word cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-c-headers company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile auctex-latexmk aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
