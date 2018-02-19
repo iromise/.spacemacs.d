@@ -34,7 +34,7 @@ values."
      windows-scripts
      yaml
      ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
+     ;; Example of useful layers you mayexport PYTHONPATH=$PYTHONPATH:/Applicatin want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
@@ -54,11 +54,11 @@ values."
                    auto-completion-tab-key-behavior 'cycle
                    auto-completion-complete-with-key-sequence nil
                    auto-completion-complete-with-key-sequence-delay 0.1
-				   ;; show snippets in the auto-completion popup
-				   auto-completion-enable-snippets-in-popup t
+                   ;; show snippets in the auto-completion popup
+                   auto-completion-enable-snippets-in-popup t
                    ;; Sort results by usage
-				   auto-completion-enable-sort-by-usage t
-				   ;; enable automatic docstring tooltips
+                   auto-completion-enable-sort-by-usage t
+                   ;; enable automatic docstring tooltips
                    auto-completion-enable-help-tooltip t)
      semantic
      better-defaults
@@ -72,13 +72,15 @@ values."
      (latex :variables
             latex-enable-folding t)
      restructuredtext
-	 javascript
+     javascript
      (python :variables
 			;; format the code when saving file
 			python-enable-yapf-format-on-save t
 			;; sort the imports when saving file
-			python-sort-imports-on-save t)
-	 sage
+			python-sort-imports-on-save t
+      ;; file column size
+      python-fill-column 177
+      )
      imenu-list
      (c-c++ :variables
             ;; open file in c++-mode
@@ -101,7 +103,9 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-    iimage
+                                      iimage
+                                      sage-shell-mode
+                                      auto-complete-sage
    )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -361,6 +365,13 @@ you should place your code here."
   ;;set the default encoding of the file to be read
   (prefer-coding-system 'utf-8)
 
+  ;; key bindings
+  (when (eq system-type 'darwin) ;; mac specific settings
+    (setq mac-option-modifier 'alt)
+    (setq mac-command-modifier 'meta)
+    (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+    )
+
   ;;set the default encoding of the file to be write
 
   (setq default-buffer-file-coding-system 'utf-8)
@@ -376,7 +387,12 @@ you should place your code here."
   ;;(add-to-list 'load-path "/home/iromise/.spacemacs.d/lang")
   ;;(require 'init-latex)
   ;;(require 'init-markdown)
-  (custom-set-faces '(hl-line 
+
+
+  ;;ipython
+  (setq python-shell-completion-native-enable nil)
+
+  (custom-set-faces '(hl-line
 						((t (:foreground nil :underline nil)))))
   (setq large-file-warning-threshold 100000000)
   (global-unset-key (kbd "C-@"))
@@ -402,7 +418,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (centered-cursor-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort powershell popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish define-word cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-c-headers company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile auctex-latexmk aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
+    (centered-cursor-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort powershell popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish define-word cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-c-headers company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-sage auto-complete-rst auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
