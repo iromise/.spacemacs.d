@@ -30,7 +30,9 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(javascript
+   '(
+     lsp
+     javascript
      windows-scripts
      yaml
      ;; ----------------------------------------------------------------
@@ -42,7 +44,7 @@ values."
      (shell :variables
              shell-default-height 30
              shell-default-position 'bottom
-			 shell-default-shell 'term
+             shell-default-shell 'term
              shell-default-term-shell "/bin/zsh")
 	   tmux
      spell-checking
@@ -74,6 +76,7 @@ values."
      restructuredtext
      javascript
      (python :variables
+      python-backend 'lsp
 			;; format the code when saving file
 			python-enable-yapf-format-on-save t
 			;; sort the imports when saving file
@@ -418,7 +421,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (centered-cursor-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort powershell popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish define-word cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-c-headers company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-sage auto-complete-rst auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
+    (lsp-ui lsp-python company-lsp lsp-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort powershell popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish define-word cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-c-headers company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode clang-format centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-sage auto-complete-rst auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
