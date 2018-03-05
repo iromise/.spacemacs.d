@@ -31,25 +31,23 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     lsp
-     javascript
-     windows-scripts
-     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you mayexport PYTHONPATH=$PYTHONPATH:/Applicatin want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-	 ;;tools
-     (shell :variables
-             shell-default-height 30
-             shell-default-position 'bottom
-             shell-default-shell 'term
-             shell-default-term-shell "/bin/zsh")
-	   tmux
-     spell-checking
+
+
+     ;; checkers
+     (spell-checking :variables
+                     ;; possible some bug with emacs deamon
+                     spell-checking-enable-auto-dictionary nil
+                     ;; make editor too slow sometimes
+                     spell-checking-enable-by-default nil
+                     )
      syntax-checking
-     helm
+
+     ;; completion
      (auto-completion :variables
                    ;; when press ret completes with the current selection
                    auto-completion-return-key-behavior 'complete
@@ -62,19 +60,46 @@ values."
                    auto-completion-enable-sort-by-usage t
                    ;; enable automatic docstring tooltips
                    auto-completion-enable-help-tooltip t)
+
+     ;; file tree
+     treemacs
+
      semantic
      better-defaults
+     imenu-list
 
-	 ;; code language
-     shell-scripts
+	   ;; code language
+     bibtex
+     (c-c++ :variables
+            ;; open file in c++-mode
+            c-c++-default-mode-for-headers 'c++-mode
+            ;; enable clang support
+            c-c++-enable-clang-support t
+            ;; enable format when saving file
+            c-c++-enable-clang-format-on-save t
+            )
      emacs-lisp
      (markdown :variables
             ;;use vmd(Github-flavored live preview) live preview a markdown buffer
             markdown-live-preview-engine 'vmd)
      (latex :variables
-            latex-enable-folding t)
-     restructuredtext
-     javascript
+            ;; build command,using default 
+            latex-build-command "LatexMk"
+            latex-enable-auto-fill t
+            ;; enable folding of text
+            latex-enable-folding t
+            latex-enable-magic t)
+            ;;magic-latex-enable-block-highlight t
+            ;;magic-latex-enable-pretty-symbols t
+            ;;magic-latex-enable-suscript t
+            ;;magic-latex-enable-inline-image t
+            ;;magic-latex-enable-block-align t)
+     lsp
+     (javascript  :variables
+                  javascript-disable-tern-port-files nil
+                  js2-basic-offset 2
+                  js-indent-level 2)
+
      (python :variables
       python-backend 'lsp
 			;; format the code when saving file
@@ -84,22 +109,36 @@ values."
       ;; file column size
       python-fill-column 177
       )
-     imenu-list
-     (c-c++ :variables
-            ;; open file in c++-mode
-            c-c++-default-mode-for-headers 'c++-mode
-            ;; enable clang support
-            c-c++-enable-clang-support t
-            ;; enable format when saving file
-            c-c++-enable-clang-format-on-save t
-            )
+
+     shell-scripts
+     windows-scripts
+     yaml
+     ;; os 
+     (osx :variables
+          osx-command-as       'hyper
+          osx-option-as        'meta
+          osx-control-as       'control
+          osx-function-as      'none
+          osx-right-command-as 'left
+          osx-right-option-as  'left
+          osx-right-control-as 'left)
+     ;; theme
+     (colors :variables
+             ;; cat bar
+             colors-enable-nyan-cat-progress-bar (display-graphic-p))
+	   ;;tools
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom
+            shell-default-shell 'term
+            shell-default-term-shell "/bin/zsh")
+	   tmux
+
+     helm
      ;;version-control
      git
-     org
      ;; tags
      ;; gtags ;; make too slow
-     ;; file tree
-	 treemacs
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -107,8 +146,6 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       iimage
-                                      sage-shell-mode
-                                      auto-complete-sage
    )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -131,7 +168,9 @@ You should not put any user code in there besides modifying the variable
 values."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
-  (setq configuration-layer--elpa-archives
+  ;; develop : configuration-layer-elpa-archives
+  ;; stable : configuration-layer--elpa-archives
+  (setq configuration-layer-elpa-archives
     '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
       ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
       ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
@@ -368,15 +407,7 @@ you should place your code here."
   ;;set the default encoding of the file to be read
   (prefer-coding-system 'utf-8)
 
-  ;; key bindings
-  (when (eq system-type 'darwin) ;; mac specific settings
-    (setq mac-option-modifier 'alt)
-    (setq mac-command-modifier 'meta)
-    (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
-    )
-
   ;;set the default encoding of the file to be write
-
   (setq default-buffer-file-coding-system 'utf-8)
 
   ;;(add-to-list 'load-path "/home/iromise/.spacemacs.d/tools")
@@ -387,13 +418,13 @@ you should place your code here."
 
   ;;(add-to-list 'load-path "/home/iromise/.spacemacs.d/ui")
   ;; language config
-  ;;(add-to-list 'load-path "/home/iromise/.spacemacs.d/lang")
-  ;;(require 'init-latex)
-  ;;(require 'init-markdown)
-
-
+  (add-to-list 'load-path "~/.spacemacs.d/lang")
+  (require 'init-latex)
   ;;ipython
   (setq python-shell-completion-native-enable nil)
+  ;; latex
+  ;;; when you open up a compiled PDF, the preview will update automatically when you recompile.
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
   (custom-set-faces '(hl-line
 						((t (:foreground nil :underline nil)))))
@@ -421,7 +452,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (lsp-ui lsp-python company-lsp lsp-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort powershell popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish define-word cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-c-headers company-auctex company-anaconda column-enforce-mode coffee-mode clean-aindent-mode clang-format centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-sage auto-complete-rst auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
+    (auctex-latexmk yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop reveal-in-osx-finder restart-emacs realgud rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort powershell popwin pippel pip-requirements persp-mode pcre2el pbcopy password-generator paradox overseer osx-trash osx-dictionary org-ref org-plus-contrib org-bullets open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow magic-latex-buffer macrostep lsp-ui lsp-python lorem-ipsum livid-mode live-py-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-lsp company-c-headers company-auctex company-anaconda column-enforce-mode color-identifiers-mode coffee-mode clean-aindent-mode clang-format centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

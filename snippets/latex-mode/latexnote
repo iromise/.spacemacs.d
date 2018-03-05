@@ -1,0 +1,69 @@
+# -*- mode: snippet -*-
+# name: latex
+# key: latexnote
+# --
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+\documentclass[12pt,a4paper]{article}
+
+% ================== 宏 包 ===================%
+%% 中文 XeCJK 宏包
+\usepackage{xeCJK}
+\usepackage{fontspec,xltxtra,xunicode}
+
+\usepackage[colorlinks,linkcolor=blue,anchorcolor=red,citecolor=green,urlcolor=blue]{hyperref}
+\usepackage{tabularx}\usepackage{authblk}                   % 作者信息
+\usepackage{algorithm}                 % 算法排版
+\usepackage{amsmath}                   % 数学符号与公式
+\usepackage{amsfonts}                  % 数学符号与字体
+\usepackage{graphics}
+\usepackage{color}
+\usepackage{fancyhdr}                  % 设置页眉页脚
+\usepackage{fancyvrb}                  % 抄录环境
+\usepackage{float}                     % 管理浮动体
+\usepackage{geometry}                  % 定制页面格式
+\usepackage{lineno}                    % 生成行号
+\usepackage{listings}                  % 插入程序源代码
+\usepackage{multicol}                  % 多栏排版
+\usepackage[square,sort,comma,numbers]{natbib}                    % 管理文献引用
+%\usepackage{cite}
+\usepackage{rotating}                  % 旋转文字，图形，表格
+\usepackage{subfigure}                 % 排版子图形
+\usepackage{titlesec}                  % 改变章节标题格式
+\usepackage{moresize}                  % 更多字体大小
+\usepackage{anysize}
+\usepackage{indentfirst}               % 首段缩进
+\usepackage{booktabs}                  % 使用\multicolumn
+\usepackage{multirow}                  % 使用\multirow
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+\usepackage{titlesec}                  % 改变标题样式
+\usepackage{enumitem}
+% ==================================================%
+
+
+\geometry{letterpaper}
+
+\defaultfontfeatures{Mapping=tex-text}
+\setromanfont{SimSun} %设置中文字体
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt %文章内中文自动换行
+
+
+\title{}
+\author{刘保证,网络科学与网络空间研究院}
+\date{\today}
+
+\begin{document}
+\maketitle
+%\tableofcontents
+
+
+
+
+\bibliographystyle{IEEEtran}
+\clearpage
+\bibliography{ref.bib}
+\end{document}
+
