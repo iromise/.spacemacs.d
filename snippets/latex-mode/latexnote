@@ -43,7 +43,7 @@
 % ==================================================%
 
 
-\geometry{letterpaper}
+
 
 \defaultfontfeatures{Mapping=tex-text}
 \setromanfont{SimSun} %设置中文字体
