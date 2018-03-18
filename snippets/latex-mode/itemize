@@ -3,5 +3,10 @@
 # key: item
 # --
 \begin{itemize}[${1:itemindent=1em}]
-\item $0
+\item $2
+\item $3
+\item $4
+\item $5
 \end{itemize}
+
+$0

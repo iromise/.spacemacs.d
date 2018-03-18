@@ -1,10 +1,10 @@
 # -*- mode: snippet -*-
-# name: show a figure
+# name: figure
 # key: figure
 # --
 \begin{figure}[${1:htbp}]
     \centering
-    \includegraphics[${2:width=90bp}]{figure/${3:name}}
+    \includegraphics[${2:scale=0.5}]{figure/${3:name}}
     \caption{${4:caption}}
     \label{${5:label}}
 \end{figure}
