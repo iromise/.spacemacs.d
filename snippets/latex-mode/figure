@@ -6,6 +6,6 @@
     \centering
     \includegraphics[${2:scale=0.5}]{figure/${3:name}}
     \caption{${4:caption}}
-    \label{${5:label}}
+    \label{fig: ${5:label}}
 \end{figure}
 $0

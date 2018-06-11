@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: androidsig
+# key: androidsig
+# --
+
+import hashlib
+import os
+import base64
+
+cert =  os.popen('openssl pkcs7 -inform DER -in CERT.RSA  -print_certs -outform der').read()
+cert = cert.strip()
+cert = cert.split('\n')[3:-1]
+cert = ''.join(s for s in cert)
+cert = base64.b64decode(cert)
+cert = cert.encode('hex')
+print cert

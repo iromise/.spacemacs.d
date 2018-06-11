@@ -3,5 +3,8 @@
 # key: enum
 # --
 \begin{enumerate}[${1:itemindent=1em}]
-\item $0
+\item $2
+\item $3
+\item $4
 \end{enumerate}
+$0

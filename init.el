@@ -36,8 +36,6 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-
-
      ;; checkers
      ;; spell-checking
      syntax-checking
@@ -65,7 +63,6 @@ values."
 
 	   ;; code language
      bibtex
-     cquery
      (c-c++ :variables
             ;; open file in c++-mode
             c-c++-default-mode-for-headers 'c++-mode
@@ -73,7 +70,7 @@ values."
             c-c++-enable-clang-support t
             ;; enable format when saving file
             c-c++-enable-clang-format-on-save t
-            ;;; google style
+            ;;; google style as the clang format is already used
             ;;; c-c++-enable-google-style t
             )
      emacs-lisp
@@ -92,9 +89,11 @@ values."
                   javascript-disable-tern-port-files nil
                   js2-basic-offset 2
                   js-indent-level 2)
-
+     (json :variables
+           js-indent-level 4)
      (python :variables
-      python-backend 'lsp
+      ;; lsp or anaconda
+      python-backend 'anaconda
 			;; format the code when saving file
 			python-enable-yapf-format-on-save t
 			;; sort the imports when saving file
@@ -136,6 +135,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       iimage
+                                      ccls
    )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -419,6 +419,18 @@ you should place your code here."
   ;; language config
   (add-to-list 'load-path "~/.spacemacs.d/lang")
 
+  (require 'ccls)
+  (setq ccls-executable "/usr/local/bin/ccls")
+  (setq ccls-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
+  (defun ccls//enable ()
+    (condition-case nil
+        (lsp-ccls-enable)
+      (user-error nil)))
+  (use-package ccls
+    :commands lsp-ccls-enable
+    :init (add-hook 'c-mode-common-hook #'ccls//enable))
+  ;; Also see lsp-project-whitelist lsp-project-blacklist ccls-root-matchers
+
   (require 'init-latex)
   ;;ipython
   (setq python-shell-completion-native-enable nil)
@@ -459,7 +471,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (cquery yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop reveal-in-osx-finder restart-emacs realgud rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pippel pipenv pip-requirements persp-mode pcre2el pbcopy password-generator paradox overseer osx-trash osx-dictionary org-ref org-plus-contrib org-bullets open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow magic-latex-buffer macrostep lsp-ui lsp-python lorem-ipsum livid-mode live-py-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy font-lock+ flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-lsp company-c-headers company-auctex company-anaconda column-enforce-mode color-identifiers-mode coffee-mode clean-aindent-mode clang-format centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
+    (evil-goggles yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle shell-pop reveal-in-osx-finder restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pippel pipenv pip-requirements persp-mode pcre2el pbcopy password-generator paradox overseer osx-trash osx-dictionary org-ref org-plus-contrib org-bullets open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-svn magit-gitflow magic-latex-buffer macrostep lsp-ui lsp-python lsp-javascript-typescript lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator json-mode js2-refactor js-doc insert-shebang indent-guide importmagic hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy font-lock+ flycheck-rtags flycheck-pos-tip flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish cython-mode counsel-projectile company-tern company-statistics company-shell company-rtags company-quickhelp company-lsp company-c-headers company-auctex company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode clang-format centered-cursor-mode ccls auto-yasnippet auto-highlight-symbol auto-compile auctex-latexmk aggressive-indent ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

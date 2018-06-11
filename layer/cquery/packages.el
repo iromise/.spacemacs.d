@@ -30,13 +30,14 @@
 ;;; Code:
 
 (defconst cquery-packages
-  '(cquery))
+  '(
+    (cquery :requires lsp-mode)
+    ))
 
 ;; See also https://github.com/cquery-project/cquery/wiki/Emacs
 (defun cquery/init-cquery ()
   (use-package cquery
     :commands lsp-cquery-enable
-    
     :init (add-hook 'c-mode-common-hook #'cquery//enable)
     :config
     ;; overlay is slow
@@ -46,11 +47,20 @@
     (setq cquery-extra-init-params
           '(:cacheFormat "msgpack" :completion (:detailedLabel t) :xref (:container t)
                          :diagnostics (:frequencyMs 5000)))
-    ))
-
-(defun cquery/post-init-company ()
-  (spacemacs|add-company-backends :backends company-lsp :modes c-mode-common)
+    )
+    (spacemacs|add-company-backends :backends company-lsp :modes c-mode-common)
   )
 
-
-;;; packages.el ends here
+;; (defun cquery/init-company-lsp ()
+;;   (use-package company-lsp
+;;     :defer t
+;;     :commands (company-lsp)
+;;     :init
+;;     (setq
+;;      company-transformers nil
+;;      company-lsp-async t
+;;      company-lsp-cache-candidates nil
+;;      )
+;;     )
+  
+;;   )

@@ -60,8 +60,14 @@
 %\tableofcontents
 
 
+\section{近期相关研究}
+\section{个人观点}
+\subsection{优缺点}
+优点
 
+缺点
 
+\subsection{进一步可做}
 \bibliographystyle{IEEEtran}
 \clearpage
 \bibliography{ref.bib}
